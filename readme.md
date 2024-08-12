@@ -69,3 +69,19 @@ Puedes importar la colección de Postman para probar las rutas de la API. Puedes
 ## Soporte
 
 Si tienes alguna pregunta o problema, por favor crea un nuevo issue en este repositorio o contacta conmigo via email.
+
+## test
+
+antes de ejecutar los test crear un archivo .env.test con las siguientes variables de entorno:
+
+```env
+PORT=3000
+MONGODB_URI=mongodb://localhost:27017/eval360-test
+JWT_SECRET=your_secret_key
+```
+
+Para ejecutar los test:
+
+```bash
+npm run test
+```
