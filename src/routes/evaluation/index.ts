@@ -123,7 +123,12 @@ evaluationRouter.post(
   authorize(roleAuthorized),
   createEvaluationController
 );
-evaluationRouter.get("/", authorize(roleAuthorized), listEvaluationsController);
+evaluationRouter.get(
+  "/",
+  auth,
+  authorize(roleAuthorized),
+  listEvaluationsController
+);
 evaluationRouter.get(
   "/:id",
   auth,

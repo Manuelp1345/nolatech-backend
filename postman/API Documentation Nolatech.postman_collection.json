@@ -22,7 +22,7 @@
 									"const token = jsonData.token; // Assuming the token is in the 'token' field of the response\r",
 									"\r",
 									"if (token) {\r",
-									"  pm.environment.set(\"token\", token); // Save the token to an environment variable\r",
+									"  pm.collectionVariables.set(\"token\", token);\r",
 									"}\r",
 									""
 								],
@@ -64,6 +64,12 @@
 							"listen": "test",
 							"script": {
 								"exec": [
+									"const jsonData = pm.response.json();\r",
+									"const token = jsonData.token; // Assuming the token is in the 'token' field of the response\r",
+									"\r",
+									"if (token) {\r",
+									"  pm.collectionVariables.set(\"token\", token);\r",
+									"}\r",
 									""
 								],
 								"type": "text/javascript",
@@ -76,7 +82,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"password\": \"123456\",\r\n    \"email\":\"a@a.com\",\r\n    \"username\":\"b\",\r\n    \"role\":\"employer\"\r\n}",
+							"raw": "{\r\n    \"password\": \"123456\",\r\n    \"email\":\"a@a.com\",\r\n    \"username\":\"a\",\r\n    \"role\":\"admin\"\r\n    // roles employee, admin , manager\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -84,12 +90,10 @@
 							}
 						},
 						"url": {
-							"raw": "http://localhost:3000/auth/register",
-							"protocol": "http",
+							"raw": "{{baseUrl}}/auth/register",
 							"host": [
-								"localhost"
+								"{{baseUrl}}"
 							],
-							"port": "3000",
 							"path": [
 								"auth",
 								"register"
@@ -108,8 +112,27 @@
 				{
 					"name": "departments",
 					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
 						"method": "GET",
-						"header": []
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/departments",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"departments"
+							]
+						}
 					},
 					"response": []
 				},
@@ -134,6 +157,16 @@
 						}
 					],
 					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
 						"method": "POST",
 						"header": [],
 						"body": {
@@ -178,6 +211,16 @@
 						}
 					],
 					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
 						"method": "PUT",
 						"header": [],
 						"body": {
@@ -223,6 +266,16 @@
 						}
 					],
 					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
 						"method": "GET",
 						"header": [],
 						"url": {
@@ -245,12 +298,6 @@
 							"listen": "test",
 							"script": {
 								"exec": [
-									"const jsonData = pm.response.json();\r",
-									"const id = jsonData._id; // Assuming the token is in the 'token' field of the response\r",
-									"\r",
-									"if (id) {\r",
-									"  pm.environment.set(\"idDepartment\", id); // Save the token to an environment variable\r",
-									"}\r",
 									""
 								],
 								"type": "text/javascript",
@@ -259,6 +306,16 @@
 						}
 					],
 					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
 						"method": "DELETE",
 						"header": [],
 						"url": {
@@ -279,71 +336,6 @@
 		{
 			"name": "Employer",
 			"item": [
-				{
-					"name": "Employeer",
-					"event": [
-						{
-							"listen": "test",
-							"script": {
-								"exec": [
-									"const jsonData = pm.response.json();\r",
-									"const id = jsonData._id; // Assuming the token is in the 'token' field of the response\r",
-									"\r",
-									"if (id) {\r",
-									"  pm.environment.set(\"idEmployee\", id); // Save the token to an environment variable\r",
-									"pm.collectionVariables.set(\"idEmployee\", id);\r",
-									"}"
-								],
-								"type": "text/javascript",
-								"packages": {}
-							}
-						}
-					],
-					"request": {
-						"auth": {
-							"type": "bearer",
-							"bearer": [
-								{
-									"key": "token",
-									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY2Yjk2NmY3NjBiOWQ0ZmIxMDQ3MDNkOSIsInJvbGUiOiJhZG1pbiIsImlhdCI6MTcyMzQyNjU1MiwiZXhwIjoxNzIzNDMwMTUyfQ.BIRDQUTEZxj0_AP5Fhs7QREiAGoQ9na1-clq7taCvdY",
-									"type": "string"
-								}
-							]
-						},
-						"method": "POST",
-						"header": [],
-						"body": {
-							"mode": "raw",
-							"raw": "{\r\n    \"firstName\": \"John a\",\r\n    \"lastName\": \"Doe\",\r\n    \"email\": \"john.doe@example.com\",\r\n    \"phone\": \"555-1234\",\r\n    \"position\": \"Software Engineer\",\r\n    \"department\": \"{{idDepartment}}\",\r\n    \"hireDate\": \"2023-01-01\",\r\n    \"supervisor\": \"66b96a8c0a9fff2f4af6c120\",\r\n    \"user\": \"66b96e8a54966a4b776f09aa\"\r\n}",
-							"options": {
-								"raw": {
-									"language": "json"
-								}
-							}
-						},
-						"url": {
-							"raw": "http://localhost:3000/employee",
-							"protocol": "http",
-							"host": [
-								"localhost"
-							],
-							"port": "3000",
-							"path": [
-								"employee"
-							],
-							"query": [
-								{
-									"key": "access_key",
-									"value": "{{accessKey}}",
-									"description": "Optional. A collection's read-only access key. Using this query parameter does not require an API key to call the endpoint.",
-									"disabled": true
-								}
-							]
-						},
-						"description": "Gets information about a collection. For a complete list of this endpoint's possible values, use the [collection.json schema file](https://schema.postman.com/json/collection/v2.1.0/collection.json)."
-					},
-					"response": []
-				},
 				{
 					"name": "Employeers",
 					"event": [
@@ -370,7 +362,7 @@
 							"bearer": [
 								{
 									"key": "token",
-									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY2Yjk2NmY3NjBiOWQ0ZmIxMDQ3MDNkOSIsInJvbGUiOiJhZG1pbiIsImlhdCI6MTcyMzQyNjU1MiwiZXhwIjoxNzIzNDMwMTUyfQ.BIRDQUTEZxj0_AP5Fhs7QREiAGoQ9na1-clq7taCvdY",
+									"value": "{{token}}",
 									"type": "string"
 								}
 							]
@@ -378,12 +370,73 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "http://localhost:3000/employee",
-							"protocol": "http",
+							"raw": "{{baseUrl}}/employee",
 							"host": [
-								"localhost"
+								"{{baseUrl}}"
 							],
-							"port": "3000",
+							"path": [
+								"employee"
+							],
+							"query": [
+								{
+									"key": "access_key",
+									"value": "{{accessKey}}",
+									"description": "Optional. A collection's read-only access key. Using this query parameter does not require an API key to call the endpoint.",
+									"disabled": true
+								}
+							]
+						},
+						"description": "Gets information about a collection. For a complete list of this endpoint's possible values, use the [collection.json schema file](https://schema.postman.com/json/collection/v2.1.0/collection.json)."
+					},
+					"response": []
+				},
+				{
+					"name": "Employeer",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"const jsonData = pm.response.json();\r",
+									"const id = jsonData._id; // Assuming the token is in the 'token' field of the response\r",
+									"\r",
+									"if (id) {\r",
+									"  pm.environment.set(\"idEmployee\", id); // Save the token to an environment variable\r",
+									"pm.collectionVariables.set(\"idEmployee\", id);\r",
+									"}"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"firstName\": \"John a\",\r\n    \"lastName\": \"Doe\",\r\n    \"email\": \"john.doe@example.com\",\r\n    \"phone\": \"555-1234\",\r\n    \"position\": \"Software Engineer\",\r\n    \"department\": \"{{idDepartment}}\",\r\n    \"hireDate\": \"2023-01-01\",\r\n    \"supervisor\": \"66b96a8c0a9fff2f4af6c120\",\r\n    \"user\": \"66b96e8a54966a4b776f09aa\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/employee",
+							"host": [
+								"{{baseUrl}}"
+							],
 							"path": [
 								"employee"
 							],
@@ -420,7 +473,7 @@
 							"bearer": [
 								{
 									"key": "token",
-									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY2Yjk2NmY3NjBiOWQ0ZmIxMDQ3MDNkOSIsInJvbGUiOiJhZG1pbiIsImlhdCI6MTcyMzQyNjU1MiwiZXhwIjoxNzIzNDMwMTUyfQ.BIRDQUTEZxj0_AP5Fhs7QREiAGoQ9na1-clq7taCvdY",
+									"value": "{{token}}",
 									"type": "string"
 								}
 							]
@@ -437,12 +490,10 @@
 							}
 						},
 						"url": {
-							"raw": "http://localhost:3000/employee/{{idEmployee}}",
-							"protocol": "http",
+							"raw": "{{baseUrl}}/employee/{{idEmployee}}",
 							"host": [
-								"localhost"
+								"{{baseUrl}}"
 							],
-							"port": "3000",
 							"path": [
 								"employee",
 								"{{idEmployee}}"
@@ -480,7 +531,7 @@
 							"bearer": [
 								{
 									"key": "token",
-									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY2Yjk2NmY3NjBiOWQ0ZmIxMDQ3MDNkOSIsInJvbGUiOiJhZG1pbiIsImlhdCI6MTcyMzQyNjU1MiwiZXhwIjoxNzIzNDMwMTUyfQ.BIRDQUTEZxj0_AP5Fhs7QREiAGoQ9na1-clq7taCvdY",
+									"value": "{{token}}",
 									"type": "string"
 								}
 							]
@@ -488,12 +539,10 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "http://localhost:3000/employee/{{idEmployee}}",
-							"protocol": "http",
+							"raw": "{{baseUrl}}/employee/{{idEmployee}}",
 							"host": [
-								"localhost"
+								"{{baseUrl}}"
 							],
-							"port": "3000",
 							"path": [
 								"employee",
 								"{{idEmployee}}"
@@ -512,7 +561,39 @@
 					"response": []
 				}
 			],
-			"description": "The `/collections` endpoints let you manage your [collections](https://learning.postman.com/docs/sending-requests/intro-to-collections/)."
+			"description": "The `/collections` endpoints let you manage your [collections](https://learning.postman.com/docs/sending-requests/intro-to-collections/).",
+			"auth": {
+				"type": "bearer",
+				"bearer": [
+					{
+						"key": "token",
+						"value": "{{token}}",
+						"type": "string"
+					}
+				]
+			},
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"type": "text/javascript",
+						"packages": {},
+						"exec": [
+							""
+						]
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"type": "text/javascript",
+						"packages": {},
+						"exec": [
+							""
+						]
+					}
+				}
+			]
 		},
 		{
 			"name": "evaluations",
@@ -520,6 +601,16 @@
 				{
 					"name": "evaluations",
 					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
 						"method": "GET",
 						"header": [],
 						"url": {
@@ -536,7 +627,35 @@
 				},
 				{
 					"name": "evaluation",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"const jsonData = pm.response.json();\r",
+									"const id = jsonData._id; // Assuming the token is in the 'token' field of the response\r",
+									"\r",
+									"if (id) {\r",
+									"  pm.environment.set(\"idEvaluation\", id); // Save the token to an environment variable\r",
+									"pm.collectionVariables.set(\"idEvaluation\", id);\r",
+									"}"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
 					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
 						"method": "POST",
 						"header": [],
 						"body": {
@@ -563,6 +682,16 @@
 				{
 					"name": "evaluation",
 					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
 						"method": "GET",
 						"header": [],
 						"url": {
@@ -581,6 +710,16 @@
 				{
 					"name": "evaluation update",
 					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
 						"method": "PUT",
 						"header": [],
 						"body": {
@@ -629,12 +768,40 @@
 				},
 				{
 					"name": "question",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"const jsonData = pm.response.json();\r",
+									"const id = jsonData._id; // Assuming the token is in the 'token' field of the response\r",
+									"\r",
+									"if (id) {\r",
+									"  pm.environment.set(\"idQuestion\", id); // Save the token to an environment variable\r",
+									"pm.collectionVariables.set(\"idQuestion\", id);\r",
+									"}"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
 					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
 						"method": "POST",
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"period\":\"2023-01-01\",\r\n    \"status\":\"pending\" ,\r\n    // status : \"pending\", \"completed\", \"in progress\"\r\n    \"type\": \"test\",\r\n    \"department\": \"{{idDepartment}}\",\r\n    \"employer\": \"{{idEmployee}}\"\r\n}",
+							"raw": "{\r\n  \"text\": \"pregunta 1\",\r\n  \"evaluation\": \"{{idEvaluation}}\"\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -656,11 +823,21 @@
 				{
 					"name": "question Update",
 					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
 						"method": "PUT",
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"period\":\"2023-01-02\",\r\n    \"status\":\"pending\" ,\r\n    // status : \"pending\", \"completed\", \"in progress\"\r\n    \"type\": \"test\",\r\n    \"department\": \"{{idDepartment}}\",\r\n    \"employer\": \"{{idEmployee}}\"\r\n}",
+							"raw": "{\r\n  \"text\": \"pregunta 2\",\r\n  \"evaluation\": \"{{idEvaluation}}\"\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -668,13 +845,13 @@
 							}
 						},
 						"url": {
-							"raw": "{{baseUrl}}/questions/{{idEvaluation}}",
+							"raw": "{{baseUrl}}/questions/{{idQuestion}}",
 							"host": [
 								"{{baseUrl}}"
 							],
 							"path": [
 								"questions",
-								"{{idEvaluation}}"
+								"{{idQuestion}}"
 							]
 						}
 					},
@@ -688,6 +865,16 @@
 				{
 					"name": "answers",
 					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
 						"method": "GET",
 						"header": [],
 						"url": {
@@ -704,12 +891,40 @@
 				},
 				{
 					"name": "answer",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"const jsonData = pm.response.json();\r",
+									"const id = jsonData._id; // Assuming the token is in the 'token' field of the response\r",
+									"\r",
+									"if (id) {\r",
+									"  pm.environment.set(\"idAnswer\", id); // Save the token to an environment variable\r",
+									"pm.collectionVariables.set(\"idAnswer\", id);\r",
+									"}"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
 					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
 						"method": "POST",
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"period\":\"2023-01-01\",\r\n    \"status\":\"pending\" ,\r\n    // status : \"pending\", \"completed\", \"in progress\"\r\n    \"type\": \"test\",\r\n    \"department\": \"{{idDepartment}}\",\r\n    \"employer\": \"{{idEmployee}}\"\r\n}",
+							"raw": "{\r\n    \"text\": \"El rendimiento del empleado ha sido excelente.\",\r\n    \"question\": \"{{idQuestion}}\",\r\n    \"evaluator\": \"{{idsupervisor}}\",\r\n    \"employer\": \"{{idEmployee}}\"\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -731,11 +946,21 @@
 				{
 					"name": "answer Update",
 					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
 						"method": "PUT",
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"period\":\"2023-01-02\",\r\n    \"status\":\"pending\" ,\r\n    // status : \"pending\", \"completed\", \"in progress\"\r\n    \"type\": \"test\",\r\n    \"department\": \"{{idDepartment}}\",\r\n    \"employer\": \"{{idEmployee}}\"\r\n}",
+							"raw": "{\r\n    \"text\": \"El rendimiento del empleado.\",\r\n    \"question\": \"{{idQuestion}}\",\r\n    \"evaluator\": \"{{idsupervisor}}\",\r\n    \"employer\": \"{{idEmployee}}\"\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -743,13 +968,13 @@
 							}
 						},
 						"url": {
-							"raw": "{{baseUrl}}/answers/{{idEvaluation}}",
+							"raw": "{{baseUrl}}/answers/{{idAnswer}}",
 							"host": [
 								"{{baseUrl}}"
 							],
 							"path": [
 								"answers",
-								"{{idEvaluation}}"
+								"{{idAnswer}}"
 							]
 						}
 					},
@@ -757,29 +982,27 @@
 				},
 				{
 					"name": "answer",
-					"protocolProfileBehavior": {
-						"disableBodyPruning": true
-					},
 					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
 						"method": "GET",
 						"header": [],
-						"body": {
-							"mode": "raw",
-							"raw": "{\r\n    \"period\":\"2023-01-02\",\r\n    \"status\":\"pending\" ,\r\n    // status : \"pending\", \"completed\", \"in progress\"\r\n    \"type\": \"test\",\r\n    \"department\": \"{{idDepartment}}\",\r\n    \"employer\": \"{{idEmployee}}\"\r\n}",
-							"options": {
-								"raw": {
-									"language": "json"
-								}
-							}
-						},
 						"url": {
-							"raw": "{{baseUrl}}/answers/{{idEvaluation}}",
+							"raw": "{{baseUrl}}/answers/{{idAnswer}}",
 							"host": [
 								"{{baseUrl}}"
 							],
 							"path": [
 								"answers",
-								"{{idEvaluation}}"
+								"{{idAnswer}}"
 							]
 						}
 					},
@@ -793,6 +1016,16 @@
 				{
 					"name": "report Employee",
 					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
 						"method": "GET",
 						"header": [],
 						"url": {
@@ -812,6 +1045,16 @@
 				{
 					"name": "report department",
 					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
 						"method": "GET",
 						"header": [],
 						"url": {
@@ -869,7 +1112,7 @@
 	"variable": [
 		{
 			"key": "baseUrl",
-			"value": "http://localhost:3000"
+			"value": "https://nolatech-backend-production.up.railway.app"
 		},
 		{
 			"key": "token",
