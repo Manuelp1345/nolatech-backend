@@ -7,7 +7,10 @@ const employerSchema = new Schema({
   email: { type: String, unique: true, required: true },
   phone: { type: String, required: true },
   position: { type: String, required: true },
-  department: { type: String, required: true },
+  department: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: "Department",
+  },
   hireDate: { type: Date, required: true },
   supervisor: { type: Schema.Types.ObjectId, ref: "employers" },
   user: { type: Schema.Types.ObjectId, ref: "users" },

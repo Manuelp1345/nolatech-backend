@@ -11,7 +11,7 @@ export const registerService = async (data: RegisterData) => {
   try {
     const existingUser = await userModel.findOne({ email });
     if (existingUser) {
-      throw new AppError("Email already exists", 400);
+      throw new AppError("Email already exists", 400, false);
     }
 
     const existingUsername = await userModel.findOne({ username });
@@ -41,7 +41,7 @@ export const registerService = async (data: RegisterData) => {
       throw error;
     } else {
       console.error("Unexpected error:", error);
-      throw new AppError("An unexpected error occurred", 500, false); // Errores desconocidos
+      throw new AppError("An unexpected error occurred", 500, false);
     }
   }
 };
@@ -51,12 +51,12 @@ export const loginService = async (data: LoginData) => {
   try {
     const user = await userModel.findOne({ email });
     if (!user) {
-      throw new AppError("User or password incorrect", 404);
+      throw new AppError("User or password incorrect", 404, false);
     }
 
     const isMatch = await bcrypt.compare(password, user.password);
     if (!isMatch) {
-      throw new AppError("User or password incorrect", 404);
+      throw new AppError("User or password incorrect", 404, false);
     }
 
     const token = jwt.sign({ id: user._id, role: user.role }, JWT_SECRET, {

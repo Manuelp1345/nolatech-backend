@@ -1,3 +1,4 @@
+import DepartmentModel from "../../models/Department.model";
 import employeeModel from "../../models/Employee.model";
 import { AppError } from "../../utils/AppError";
 import { Employer } from "./type";
@@ -8,7 +9,7 @@ export const employerService = async () => {
     return employers;
   } catch (error) {
     console.error("Unexpected error:", error);
-    throw new AppError("An unexpected error occurred", 500, false); // Errores desconocidos
+    throw new AppError("An unexpected error occurred", 500, true);
   }
 };
 
@@ -18,11 +19,40 @@ export const employerByIdService = async (id: string) => {
     return employer;
   } catch (error) {
     console.error("Unexpected error:", error);
-    throw new AppError("An unexpected error occurred", 500, false); // Errores desconocidos
+    throw new AppError("An unexpected error occurred", 500, true);
   }
 };
 
 export const employerCreateService = async (data: Employer) => {
+  try {
+    const departmentDoc = await DepartmentModel.findById(data.department);
+    if (!departmentDoc) {
+      throw new AppError(`Department "${data.department}" not found`, 404);
+    }
+  } catch (error) {
+    if (error instanceof AppError) {
+      throw error;
+    } else {
+      console.error("Unexpected error:", error);
+      throw new AppError("An unexpected error occurred", 500, true);
+    }
+  }
+
+  //validate email
+  try {
+    const existingEmployer = await employeeModel.findOne({ email: data.email });
+    if (existingEmployer) {
+      throw new AppError(`Employer ${data.email} already exists`, 400);
+    }
+  } catch (error) {
+    if (error instanceof AppError) {
+      throw error;
+    } else {
+      console.error("Unexpected error:", error);
+      throw new AppError("An unexpected error occurred", 500, true);
+    }
+  }
+
   try {
     const newEmployer = new employeeModel(data);
 
@@ -31,7 +61,7 @@ export const employerCreateService = async (data: Employer) => {
     return newEmployer;
   } catch (error) {
     console.error("Unexpected error:", error);
-    throw new AppError("An unexpected error occurred", 500, false); // Errores desconocidos
+    throw new AppError("An unexpected error occurred", 500, true);
   }
 };
 
@@ -44,6 +74,6 @@ export const employerUpdateService = async (id: string, data: Employer) => {
     return employer;
   } catch (error) {
     console.error("Unexpected error:", error);
-    throw new AppError("An unexpected error occurred", 500, false); // Errores desconocidos
+    throw new AppError("An unexpected error occurred", 500, true);
   }
 };

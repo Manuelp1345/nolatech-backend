@@ -1,18 +1,18 @@
+// tsconfig.json
 {
   "compilerOptions": {
-    "target": "es6",
-    "module": "commonjs",
-    "rootDir": "src",
-    "outDir": "dist",
+    "target": "ES6",
+    "module": "CommonJS",
+    "outDir": "./dist",
+    "rootDir": "./src",
     "strict": true,
     "esModuleInterop": true,
-    "emitDecoratorMetadata": true,
-    "experimentalDecorators": true
+    "skipLibCheck": true,
+    "forceConsistentCasingInFileNames": true,
+    "resolveJsonModule": true,
+    "types": ["jest", "node"],
+    "typeRoots": ["./node_modules/@types"]
   },
-  "include": ["src/**/*.ts"],
-  "exclude": ["node_modules"],
-  "typeRoots": [
-    "./node_modules/@types",
-    "./src/utils/@types/express/index.d.ts"
-  ]
+  "include": ["src/**/*", "tests/**/*"],
+  "exclude": ["node_modules"]
 }

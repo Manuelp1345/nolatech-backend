@@ -14,14 +14,14 @@ const roleAuthorized = ["admin", "manager"];
 
 /**
  * @swagger
- * /employers:
+ * /employee:
  *   get:
- *     tags: [Empleadores]
- *     summary: Obtiene todos los empleadores
- *     description: Recupera una lista de todos los empleadores.
+ *     tags: [Empleado]
+ *     summary: Obtiene todos los empleado
+ *     description: Recupera una lista de todos los empleado.
  *     responses:
  *       200:
- *         description: Lista de empleadores
+ *         description: Lista de empleado
  *         content:
  *           application/json:
  *             schema:
@@ -33,9 +33,9 @@ employerRouter.get("/", auth, authorize(roleAuthorized), employerController);
 
 /**
  * @swagger
- * /employers/{id}:
+ * /employee/{id}:
  *   get:
- *     tags: [Empleadores]
+ *     tags: [Empleado]
  *     summary: Obtiene un empleador por ID
  *     description: Recupera los detalles de un empleador específico por su ID.
  *     parameters:
@@ -64,9 +64,9 @@ employerRouter.get(
 
 /**
  * @swagger
- * /employers:
+ * /employee:
  *   post:
- *     tags: [Empleadores]
+ *     tags: [Empleado]
  *     summary: Crea un nuevo empleador
  *     description: Agrega un nuevo empleador a la base de datos.
  *     requestBody:
@@ -94,9 +94,9 @@ employerRouter.post(
 
 /**
  * @swagger
- * /employers/{id}:
+ * /employee/{id}:
  *   put:
- *     tags: [Empleadores]
+ *     tags: [Empleado]
  *     summary: Actualiza un empleador existente
  *     description: Modifica los detalles de un empleador existente.
  *     parameters:

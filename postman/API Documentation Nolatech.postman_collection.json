@@ -1,0 +1,906 @@
+{
+	"info": {
+		"_postman_id": "8de335e7-8867-40ad-a580-8a68a1f2f47f",
+		"name": "API Documentation Nolatech",
+		"description": "This template contains a boilerplate for documentation that you can quickly customize and reuse.\n\n### How to use this template:\n\n- Replace the content given brackets (()) with your API's details.\n- Tips are formatted in `codespan` - feel free to read and remove them.\n    \n\n---\n\n`Start with a brief overview of what your API offers.`\n\nThe ((product name)) provides many API products, tools, and resources that enable you to ((add product value here)).\n\n`You can also list the APIs you offer, link to the relevant pages, or do both in this section.`\n\n## **Getting started guide**\n\n`List the steps or points required to start using your APIs. Make sure to cover everything required to reach success with your API as quickly as possible.`\n\nTo start using the ((add APIs here)), you need to -\n\n`The points given below are from The Postman API's documentation. You can reference it to write your own getting started guide.`\n\n- You must use a valid API Key to send requests to the API endpoints. You can get your API key from Postman's [integrations dashboard](https://go.postman.co/settings/me/api-keys).\n- The API has [rate and usage limits](https://learning.postman.com/docs/developer/postman-api/postman-api-rate-limits/).\n- The API only responds to HTTPS-secured communications. Any requests sent via HTTP return an HTTP 301 redirect to the corresponding HTTPS resources.\n- The API returns request responses in JSON format. When an API request returns an error, it is sent in the JSON response as an error key.\n    \n\n## Authentication\n\n`Add details on the authorization keys/tokens required, steps that cover how to get them, and the relevant error codes.`\n\nThe ((product name)) API uses ((add your API's authorization type)) for authentication.\n\n`The details given below are from the Postman API's documentation. You can reference it to write your own authentication section.`\n\nPostman uses API keys for authentication. You can generate a Postman API key in the [API keys](https://postman.postman.co/settings/me/api-keys) section of your Postman account settings.\n\nYou must include an API key in each request to the Postman API with the X-Api-Key request header.\n\n### Authentication error response\n\nIf an API key is missing, malformed, or invalid, you will receive an HTTP 401 Unauthorized response code.\n\n## Rate and usage limits\n\n`Use this section to cover your APIs' terms of use. Include API limits, constraints, and relevant error codes, so consumers understand the permitted API usage and practices.`\n\n`The example given below is from The Postman API's documentation. Use it as a reference to write your APIs' terms of use.`\n\nAPI access rate limits apply at a per-API key basis in unit time. The limit is 300 requests per minute. Also, depending on your plan, you may have usage limits. If you exceed either limit, your request will return an HTTP 429 Too Many Requests status code.\n\nEach API response returns the following set of headers to help you identify your use status:\n\n| Header | Description |\n| --- | --- |\n| `X-RateLimit-Limit` | The maximum number of requests that the consumer is permitted to make per minute. |\n| `X-RateLimit-Remaining` | The number of requests remaining in the current rate limit window. |\n| `X-RateLimit-Reset` | The time at which the current rate limit window resets in UTC epoch seconds. |\n\n### 503 response\n\nAn HTTP `503` response from our servers indicates there is an unexpected spike in API access traffic. The server is usually operational within the next five minutes. If the outage persists or you receive any other form of an HTTP `5XX` error, [contact support](https://support.postman.com/hc/en-us/requests/new/).\n\n### **Need some help?**\n\n`Add links that customers can refer to whenever they need help.`\n\nIn case you have questions, go through our tutorials ((link to your video or help documentation here)). Or visit our FAQ page ((link to the relevant page)).\n\nOr you can check out our community forum, there’s a good chance our community has an answer for you. Visit our developer forum ((link to developer forum)) to review topics, ask questions, and learn from others.\n\n`You can also document or add links to libraries, code examples, and other resources needed to make a request.`",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "12237849",
+		"_collection_link": "https://pivotmkr.postman.co/workspace/nolatech~eb1118b9-aac8-411d-9065-512f9101a0c3/collection/12237849-8de335e7-8867-40ad-a580-8a68a1f2f47f?action=share&source=collection_link&creator=12237849"
+	},
+	"item": [
+		{
+			"name": "Auth",
+			"item": [
+				{
+					"name": "login",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"const jsonData = pm.response.json();\r",
+									"const token = jsonData.token; // Assuming the token is in the 'token' field of the response\r",
+									"\r",
+									"if (token) {\r",
+									"  pm.environment.set(\"token\", token); // Save the token to an environment variable\r",
+									"}\r",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"password\": \"123456\",\r\n    \"email\":\"a@a.com\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/auth/login",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"auth",
+								"login"
+							]
+						},
+						"description": "Gets information about the authenticated user."
+					},
+					"response": []
+				},
+				{
+					"name": "register",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"password\": \"123456\",\r\n    \"email\":\"a@a.com\",\r\n    \"username\":\"b\",\r\n    \"role\":\"employer\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:3000/auth/register",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"auth",
+								"register"
+							]
+						},
+						"description": "Gets information about the authenticated user."
+					},
+					"response": []
+				}
+			],
+			"description": "The `/me` endpoints let you manage information about the authenticated user."
+		},
+		{
+			"name": "department",
+			"item": [
+				{
+					"name": "departments",
+					"request": {
+						"method": "GET",
+						"header": []
+					},
+					"response": []
+				},
+				{
+					"name": "departments create",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"const jsonData = pm.response.json();\r",
+									"const id = jsonData._id; // Assuming the token is in the 'token' field of the response\r",
+									"\r",
+									"if (id) {\r",
+									"  pm.environment.set(\"idDepartment\", id); // Save the token to an environment variable\r",
+									"pm.collectionVariables.set(\"idDepartment\", id);\r",
+									"}"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\": \"RR-HH\",\r\n    \"description\": \"RR-HH description\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/departments",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"departments"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "departments Update",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"const jsonData = pm.response.json();\r",
+									"const id = jsonData._id; // Assuming the token is in the 'token' field of the response\r",
+									"\r",
+									"if (id) {\r",
+									"  pm.environment.set(\"idDepartment\", id); // Save the token to an environment variable\r",
+									"}\r",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\": \"RR-HH\",\r\n    \"description\": \"RR-HH description 2\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/departments/{{idDepartment}}",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"departments",
+								"{{idDepartment}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "department",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"const jsonData = pm.response.json();\r",
+									"const id = jsonData._id; // Assuming the token is in the 'token' field of the response\r",
+									"\r",
+									"if (id) {\r",
+									"  pm.environment.set(\"idDepartment\", id); // Save the token to an environment variable\r",
+									"}\r",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/departments/{{idDepartment}}",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"departments",
+								"{{idDepartment}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "departments delete",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"const jsonData = pm.response.json();\r",
+									"const id = jsonData._id; // Assuming the token is in the 'token' field of the response\r",
+									"\r",
+									"if (id) {\r",
+									"  pm.environment.set(\"idDepartment\", id); // Save the token to an environment variable\r",
+									"}\r",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/departments/{{idDepartment}}",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"departments",
+								"{{idDepartment}}"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Employer",
+			"item": [
+				{
+					"name": "Employeer",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"const jsonData = pm.response.json();\r",
+									"const id = jsonData._id; // Assuming the token is in the 'token' field of the response\r",
+									"\r",
+									"if (id) {\r",
+									"  pm.environment.set(\"idEmployee\", id); // Save the token to an environment variable\r",
+									"pm.collectionVariables.set(\"idEmployee\", id);\r",
+									"}"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY2Yjk2NmY3NjBiOWQ0ZmIxMDQ3MDNkOSIsInJvbGUiOiJhZG1pbiIsImlhdCI6MTcyMzQyNjU1MiwiZXhwIjoxNzIzNDMwMTUyfQ.BIRDQUTEZxj0_AP5Fhs7QREiAGoQ9na1-clq7taCvdY",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"firstName\": \"John a\",\r\n    \"lastName\": \"Doe\",\r\n    \"email\": \"john.doe@example.com\",\r\n    \"phone\": \"555-1234\",\r\n    \"position\": \"Software Engineer\",\r\n    \"department\": \"{{idDepartment}}\",\r\n    \"hireDate\": \"2023-01-01\",\r\n    \"supervisor\": \"66b96a8c0a9fff2f4af6c120\",\r\n    \"user\": \"66b96e8a54966a4b776f09aa\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:3000/employee",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"employee"
+							],
+							"query": [
+								{
+									"key": "access_key",
+									"value": "{{accessKey}}",
+									"description": "Optional. A collection's read-only access key. Using this query parameter does not require an API key to call the endpoint.",
+									"disabled": true
+								}
+							]
+						},
+						"description": "Gets information about a collection. For a complete list of this endpoint's possible values, use the [collection.json schema file](https://schema.postman.com/json/collection/v2.1.0/collection.json)."
+					},
+					"response": []
+				},
+				{
+					"name": "Employeers",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"const jsonData = pm.response.json();\r",
+									"const id = jsonData._id; // Assuming the token is in the 'token' field of the response\r",
+									"\r",
+									"if (id) {\r",
+									"  pm.environment.set(\"idEmployee\", id); // Save the token to an environment variable\r",
+									"pm.collectionVariables.set(\"idEmployee\", id);\r",
+									"}"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY2Yjk2NmY3NjBiOWQ0ZmIxMDQ3MDNkOSIsInJvbGUiOiJhZG1pbiIsImlhdCI6MTcyMzQyNjU1MiwiZXhwIjoxNzIzNDMwMTUyfQ.BIRDQUTEZxj0_AP5Fhs7QREiAGoQ9na1-clq7taCvdY",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:3000/employee",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"employee"
+							],
+							"query": [
+								{
+									"key": "access_key",
+									"value": "{{accessKey}}",
+									"description": "Optional. A collection's read-only access key. Using this query parameter does not require an API key to call the endpoint.",
+									"disabled": true
+								}
+							]
+						},
+						"description": "Gets information about a collection. For a complete list of this endpoint's possible values, use the [collection.json schema file](https://schema.postman.com/json/collection/v2.1.0/collection.json)."
+					},
+					"response": []
+				},
+				{
+					"name": "Employeers Update",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY2Yjk2NmY3NjBiOWQ0ZmIxMDQ3MDNkOSIsInJvbGUiOiJhZG1pbiIsImlhdCI6MTcyMzQyNjU1MiwiZXhwIjoxNzIzNDMwMTUyfQ.BIRDQUTEZxj0_AP5Fhs7QREiAGoQ9na1-clq7taCvdY",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"firstName\": \"John a 2\",\r\n    \"lastName\": \"Doe\",\r\n    \"email\": \"john.doe@example.com\",\r\n    \"phone\": \"555-1234\",\r\n    \"position\": \"Software Engineer\",\r\n    \"department\": \"{{idDepartment}}\",\r\n    \"hireDate\": \"2023-01-01\",\r\n    \"supervisor\": \"66b96a8c0a9fff2f4af6c120\",\r\n    \"user\": \"66b96e8a54966a4b776f09aa\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:3000/employee/{{idEmployee}}",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"employee",
+								"{{idEmployee}}"
+							],
+							"query": [
+								{
+									"key": "access_key",
+									"value": "{{accessKey}}",
+									"description": "Optional. A collection's read-only access key. Using this query parameter does not require an API key to call the endpoint.",
+									"disabled": true
+								}
+							]
+						},
+						"description": "Gets information about a collection. For a complete list of this endpoint's possible values, use the [collection.json schema file](https://schema.postman.com/json/collection/v2.1.0/collection.json)."
+					},
+					"response": []
+				},
+				{
+					"name": "Employeer",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY2Yjk2NmY3NjBiOWQ0ZmIxMDQ3MDNkOSIsInJvbGUiOiJhZG1pbiIsImlhdCI6MTcyMzQyNjU1MiwiZXhwIjoxNzIzNDMwMTUyfQ.BIRDQUTEZxj0_AP5Fhs7QREiAGoQ9na1-clq7taCvdY",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:3000/employee/{{idEmployee}}",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"employee",
+								"{{idEmployee}}"
+							],
+							"query": [
+								{
+									"key": "access_key",
+									"value": "{{accessKey}}",
+									"description": "Optional. A collection's read-only access key. Using this query parameter does not require an API key to call the endpoint.",
+									"disabled": true
+								}
+							]
+						},
+						"description": "Gets information about a collection. For a complete list of this endpoint's possible values, use the [collection.json schema file](https://schema.postman.com/json/collection/v2.1.0/collection.json)."
+					},
+					"response": []
+				}
+			],
+			"description": "The `/collections` endpoints let you manage your [collections](https://learning.postman.com/docs/sending-requests/intro-to-collections/)."
+		},
+		{
+			"name": "evaluations",
+			"item": [
+				{
+					"name": "evaluations",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/evaluations",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"evaluations"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "evaluation",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"period\":\"2023-01-01\",\r\n    \"status\":\"pending\" ,\r\n    // status : \"pending\", \"completed\", \"in progress\"\r\n    \"type\": \"test\",\r\n    \"department\": \"{{idDepartment}}\",\r\n    \"employer\": \"{{idEmployee}}\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/evaluations",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"evaluations"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "evaluation",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/evaluations/{{idEvaluation}}",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"evaluations",
+								"{{idEvaluation}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "evaluation update",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"period\":\"2023-01-02\",\r\n    \"status\":\"pending\" ,\r\n    // status : \"pending\", \"completed\", \"in progress\"\r\n    \"type\": \"test\",\r\n    \"department\": \"{{idDepartment}}\",\r\n    \"employer\": \"{{idEmployee}}\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/evaluations/{{idEvaluation}}",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"evaluations",
+								"{{idEvaluation}}"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "questions",
+			"item": [
+				{
+					"name": "questions",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/questions",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"questions"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "question",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"period\":\"2023-01-01\",\r\n    \"status\":\"pending\" ,\r\n    // status : \"pending\", \"completed\", \"in progress\"\r\n    \"type\": \"test\",\r\n    \"department\": \"{{idDepartment}}\",\r\n    \"employer\": \"{{idEmployee}}\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/questions",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"questions"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "question Update",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"period\":\"2023-01-02\",\r\n    \"status\":\"pending\" ,\r\n    // status : \"pending\", \"completed\", \"in progress\"\r\n    \"type\": \"test\",\r\n    \"department\": \"{{idDepartment}}\",\r\n    \"employer\": \"{{idEmployee}}\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/questions/{{idEvaluation}}",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"questions",
+								"{{idEvaluation}}"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "answers",
+			"item": [
+				{
+					"name": "answers",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/answers",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"answers"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "answer",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"period\":\"2023-01-01\",\r\n    \"status\":\"pending\" ,\r\n    // status : \"pending\", \"completed\", \"in progress\"\r\n    \"type\": \"test\",\r\n    \"department\": \"{{idDepartment}}\",\r\n    \"employer\": \"{{idEmployee}}\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/answers",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"answers"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "answer Update",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"period\":\"2023-01-02\",\r\n    \"status\":\"pending\" ,\r\n    // status : \"pending\", \"completed\", \"in progress\"\r\n    \"type\": \"test\",\r\n    \"department\": \"{{idDepartment}}\",\r\n    \"employer\": \"{{idEmployee}}\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/answers/{{idEvaluation}}",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"answers",
+								"{{idEvaluation}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "answer",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"period\":\"2023-01-02\",\r\n    \"status\":\"pending\" ,\r\n    // status : \"pending\", \"completed\", \"in progress\"\r\n    \"type\": \"test\",\r\n    \"department\": \"{{idDepartment}}\",\r\n    \"employer\": \"{{idEmployee}}\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/answers/{{idEvaluation}}",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"answers",
+								"{{idEvaluation}}"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "reports",
+			"item": [
+				{
+					"name": "report Employee",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/reports/employee/{{idEmployee}}",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"reports",
+								"employee",
+								"{{idEmployee}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "report department",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/reports/department/{{idDepartment}}",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"reports",
+								"department",
+								"{{idDepartment}}"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	],
+	"auth": {
+		"type": "apikey",
+		"apikey": [
+			{
+				"key": "key",
+				"value": "X-API-Key",
+				"type": "string"
+			},
+			{
+				"key": "value",
+				"value": "{{token}}",
+				"type": "string"
+			}
+		]
+	},
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "baseUrl",
+			"value": "http://localhost:3000"
+		},
+		{
+			"key": "token",
+			"value": "",
+			"type": "string"
+		},
+		{
+			"key": "idDepartment",
+			"value": "",
+			"type": "string"
+		},
+		{
+			"key": "idsupervisor",
+			"value": "",
+			"type": "string"
+		},
+		{
+			"key": "idEmployee",
+			"value": ""
+		},
+		{
+			"key": "idEvaluation",
+			"value": ""
+		},
+		{
+			"key": "idQuestion",
+			"value": ""
+		},
+		{
+			"key": "idAnswer",
+			"value": ""
+		}
+	]
+}

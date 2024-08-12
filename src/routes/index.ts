@@ -1,6 +1,11 @@
 import { Router } from "express";
 import AuthRouter from "./auth";
 import employerRouter from "./employer";
+import evaluationRouter from "./evaluation";
+import questionRouter from "./question";
+import answerRouter from "./answer";
+import departmentRouter from "./department";
+import reportRouter from "./report";
 
 const router = Router();
 
@@ -23,6 +28,11 @@ const router = Router();
  */
 
 router.use("/auth", AuthRouter);
-router.use("/employer", employerRouter);
+router.use("/employee", employerRouter);
+router.use("/evaluations", evaluationRouter);
+router.use("/questions", questionRouter);
+router.use("/answers", answerRouter);
+router.use("/departments", departmentRouter);
+router.use("/reports", reportRouter);
 
 export default router;

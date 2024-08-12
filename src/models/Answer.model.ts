@@ -2,10 +2,10 @@
 import mongoose, { Schema } from "mongoose";
 
 const answerSchema = new Schema({
-  answerText: { type: String, required: true },
-  rating: { type: Number, required: true },
+  text: { type: String, required: true },
+  rating: { type: Number, required: false },
   question: { type: Schema.Types.ObjectId, ref: "question" },
-  evaluator: { type: Schema.Types.ObjectId, ref: "employer" },
+  evaluator: { type: Schema.Types.ObjectId, ref: "users" },
   evaluatedEmployee: { type: Schema.Types.ObjectId, ref: "employer" },
   createdAt: { type: Date, default: Date.now },
   updatedAt: { type: Date, default: Date.now },

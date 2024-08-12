@@ -7,8 +7,9 @@ import { connectionDB } from "./config/db";
 import router from "./routes";
 import { errorHandler, notFoundHandler } from "./middlewares/errorHandlers";
 import { rateLimiter } from "./middlewares/rateLimit";
+import sanitizationMiddleware from "./middlewares/sanitization";
 
-const app = express();
+export const app = express();
 const port = PORT;
 
 app.get("/", (req: Request, res: Response) => {
@@ -19,8 +20,10 @@ app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerSpec));
 
 app.use(express.json({ limit: "50mb" }));
 app.use(express.urlencoded({ extended: true }));
+app.use(sanitizationMiddleware);
 app.use(logRequestDetails);
 app.use(rateLimiter);
+
 app.use(router);
 app.use(notFoundHandler);
 app.use(errorHandler);

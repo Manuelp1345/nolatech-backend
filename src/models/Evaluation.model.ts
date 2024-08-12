@@ -8,6 +8,10 @@ const evaluationSchema = new Schema({
     enum: ["pending", "completed", "in progress"],
     required: true,
   },
+  department: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: "Department",
+  },
   type: { type: String, required: true },
   employer: { type: Schema.Types.ObjectId, ref: "employers" },
   createdAt: { type: Date, default: Date.now },
