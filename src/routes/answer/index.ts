@@ -5,13 +5,26 @@ import {
   getAnswerByIdController,
   updateAnswerController,
 } from "../../controllers/answer";
+import { auth, authorize } from "../../middlewares/auth";
+
+const roleAuthorized = ["admin", "manager", "employee"];
 
 const answerRouter = Router();
 
-answerRouter.post("/", createAnswerController);
-answerRouter.get("/", getAllAnswersController);
-answerRouter.get("/:id", getAnswerByIdController);
-answerRouter.put("/:id", updateAnswerController);
+answerRouter.post("/", auth, authorize(roleAuthorized), createAnswerController);
+answerRouter.get("/", auth, authorize(roleAuthorized), getAllAnswersController);
+answerRouter.get(
+  "/:id",
+  auth,
+  authorize(roleAuthorized),
+  getAnswerByIdController
+);
+answerRouter.put(
+  "/:id",
+  auth,
+  authorize(roleAuthorized),
+  updateAnswerController
+);
 
 /**
  * @swagger

@@ -7,8 +7,11 @@ import {
   getDepartmentByIdController,
   updateDepartmentController,
 } from "../../controllers/department";
+import { auth, authorize } from "../../middlewares/auth";
 
 const departmentRouter = express.Router();
+
+const roleAuthorized = ["admin", "manager"];
 
 /**
  * @swagger
@@ -112,11 +115,41 @@ const departmentRouter = express.Router();
  *         description: Departamento no encontrado
  */
 
-departmentRouter.post("/", createDepartmentController);
-departmentRouter.get("/", getAllDepartmentsController);
-departmentRouter.get("/:id", getDepartmentByIdController);
-departmentRouter.put("/:id", updateDepartmentController);
-departmentRouter.delete("/:id", deleteDepartmentController);
+departmentRouter.post(
+  "/",
+  auth,
+
+  authorize(roleAuthorized),
+  createDepartmentController
+);
+departmentRouter.get(
+  "/",
+  auth,
+
+  authorize(roleAuthorized),
+  getAllDepartmentsController
+);
+departmentRouter.get(
+  "/:id",
+  auth,
+
+  authorize(roleAuthorized),
+  getDepartmentByIdController
+);
+departmentRouter.put(
+  "/:id",
+  auth,
+
+  authorize(roleAuthorized),
+  updateDepartmentController
+);
+departmentRouter.delete(
+  "/:id",
+  auth,
+
+  authorize(roleAuthorized),
+  deleteDepartmentController
+);
 
 /**
  * @swagger

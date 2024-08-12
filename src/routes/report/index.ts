@@ -3,8 +3,11 @@ import {
   getDepartmentReportController,
   getEmployeeReportController,
 } from "../../controllers/report";
+import { auth, authorize } from "../../middlewares/auth";
 
 const reportRouter = Router();
+
+const roleAuthorized = ["admin", "manager"];
 
 /**
  * @swagger
@@ -85,8 +88,18 @@ const reportRouter = Router();
  *         description: Error al generar el reporte
  */
 
-reportRouter.get("/employee/:id", getEmployeeReportController);
-reportRouter.get("/department/:id", getDepartmentReportController);
+reportRouter.get(
+  "/employee/:id",
+  auth,
+  authorize(roleAuthorized),
+  getEmployeeReportController
+);
+reportRouter.get(
+  "/department/:id",
+  auth,
+  authorize(roleAuthorized),
+  getDepartmentReportController
+);
 
 /**
  * @swagger

@@ -6,7 +6,9 @@ import {
   submitEvaluationController,
   updateEvaluationController,
 } from "../../controllers/evaluation";
+import { auth, authorize } from "../../middlewares/auth";
 
+const roleAuthorized = ["admin", "manager"];
 const evaluationRouter = Router();
 /**
  * @swagger
@@ -115,11 +117,31 @@ const evaluationRouter = Router();
  *         description: Evaluación no encontrada
  */
 
-evaluationRouter.post("/", createEvaluationController);
-evaluationRouter.get("/", listEvaluationsController);
-evaluationRouter.get("/:id", getEvaluationByIdController);
-evaluationRouter.put("/:id", updateEvaluationController);
-evaluationRouter.post("/:id/submit", submitEvaluationController);
+evaluationRouter.post(
+  "/",
+  auth,
+  authorize(roleAuthorized),
+  createEvaluationController
+);
+evaluationRouter.get("/", authorize(roleAuthorized), listEvaluationsController);
+evaluationRouter.get(
+  "/:id",
+  auth,
+  authorize(roleAuthorized),
+  getEvaluationByIdController
+);
+evaluationRouter.put(
+  "/:id",
+  auth,
+  authorize(roleAuthorized),
+  updateEvaluationController
+);
+evaluationRouter.post(
+  "/:id/submit",
+  auth,
+  authorize(roleAuthorized),
+  submitEvaluationController
+);
 
 /**
  * @swagger

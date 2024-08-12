@@ -6,7 +6,8 @@ import {
   getAllQuestionsController,
   updateQuestionController,
 } from "../../controllers/question";
-
+import { auth, authorize } from "../../middlewares/auth";
+const roleAuthorized = ["admin", "manager"];
 const questionRouter = Router();
 /**
  * @swagger
@@ -72,11 +73,26 @@ const questionRouter = Router();
  *         description: Pregunta no encontrada
  */
 
-questionRouter.post("/", createQuestionController);
+questionRouter.post(
+  "/",
+  auth,
+  authorize(roleAuthorized),
+  createQuestionController
+);
 
-questionRouter.get("/", getAllQuestionsController);
+questionRouter.get(
+  "/",
+  auth,
+  authorize(roleAuthorized),
+  getAllQuestionsController
+);
 
-questionRouter.put("/:id", updateQuestionController);
+questionRouter.put(
+  "/:id",
+  auth,
+  authorize(roleAuthorized),
+  updateQuestionController
+);
 
 /**
  * @swagger
