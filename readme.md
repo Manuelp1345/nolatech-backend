@@ -85,3 +85,7 @@ Para ejecutar los test:
 ```bash
 npm run test
 ```
+
+## Demo Temporal
+
+Puedes probar la API en el siguiente enlace: [https://nolatech-backend-production.up.railway.app/api-docs](https://nolatech-backend-production.up.railway.app/api-docs)
